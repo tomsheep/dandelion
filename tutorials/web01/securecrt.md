@@ -12,6 +12,7 @@
 
 ### Optional：
 此时没有对这个session进行额外配置，白底黑字，也不能正常显示中文，可以进行如下配置
+
 1. Options菜单-> Session Options
 2. 左侧选择`Terminal->Appearance`, 将Current Color Scheme改为`Traditional`
 3. 点击Font按钮, 选择一种支持中文的字体, 比如新宋体, 字符集从`西欧语言`改为`中文GB2312`。Optional：推荐`Yahei Consolas`这个字体，很适合term，Windows没有带这个字体，可以在我发给你的工具里找到，安装很简单，双击文件，选择`安装`即可。安装完后重启securecrt再次进入字体选择即可找到这个字体。
