@@ -124,7 +124,7 @@ Fiddler是一个HTTP抓包、分析、构造神器，是我能想到的Windows�
 ### Inspector
 分析HTTP请求
 
-![fiddler-2.png](fiddler-1.png)
+![fiddler-2.png](fiddler-2.png)
 
 其余还有一些奇门遁甲，就不一一介绍了，自己多摸索，用熟了就会非常喜欢。
 
