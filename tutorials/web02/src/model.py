@@ -27,8 +27,8 @@ def get_post(id):
         return None
 
 
-def new_post(title, text):
-    db.insert('entries', title=title, content=text,
+def new_post(title, subtitle, text):
+    db.insert('entries', title=title, subtitle=subtitle, content=text,
               posted_on=datetime.datetime.utcnow())
 
 
@@ -36,8 +36,8 @@ def del_post(id):
     db.delete('entries', where='id=$id', vars=locals())
 
 
-def update_post(id, title, text):
+def update_post(id, title, subtitle, text):
     db.update('entries', where='id=$id', vars=locals(), title=title,
-              content=text)
+              subtitle=subtitle, content=text)
 
 
