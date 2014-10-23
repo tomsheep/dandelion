@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ''' Basic blog using webpy 0.3 '''
-
+import sys
+sys.path.append("../../../vendor/webpy")
 import web
 import model
 # Url mappings
@@ -39,6 +40,8 @@ class New:
 
     form = web.form.Form(web.form.Textbox('title', web.form.notnull,
                          size=30, description='Post title:'),
+                         web.form.Textbox('subtitle',
+                         size=30, description='Post sub-title:'),
                          web.form.Textarea('content', web.form.notnull,
                          rows=30, cols=80, description='Post content:'),
                          web.form.Button('Post entry'))
@@ -51,7 +54,7 @@ class New:
         form = self.form()
         if not form.validates():
             return render.new(form)
-        model.new_post(form.d.title, form.d.content)
+        model.new_post(form.d.title, form.d.subtitle, form.d.content)
         raise web.seeother('/')
 
 
@@ -75,7 +78,7 @@ class Edit:
         post = model.get_post(int(id))
         if not form.validates():
             return render.edit(post, form)
-        model.update_post(int(id), form.d.title, form.d.content)
+        model.update_post(int(id), form.d.title, form.d.subtitle,form.d.content)
         raise web.seeother('/')
 
 
