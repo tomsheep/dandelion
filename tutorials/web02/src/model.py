@@ -2,14 +2,14 @@
 import web
 import datetime
 import os
-from config import SQLITE_DB, DB_CREATE_SQL
+from config import SQLITE_DB, DB_CREATE_SQL, MySQL_DB
 
 
 def initdb(db_file, force=False):
-    _db = web.database(dbn='sqlite', db=db_file)
-    if force or not os.path.exists(db_file):
-        print 'init db...'
-        _db.query(DB_CREATE_SQL)
+    _db = web.database(dbn='mysql', **MySQL_DB)
+    # if force or not os.path.exists(db_file):
+    #     print 'init db...'
+    _db.query(DB_CREATE_SQL)
     return _db
 
 
