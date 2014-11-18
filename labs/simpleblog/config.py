@@ -9,15 +9,8 @@ SQLITE_SETTINGS = {
 MYSQL_SETTINGS = {
     'dbn': 'mysql',
     'schema': 'schema-mysql.sql',
-    # 'config': {
-    #     'host': '127.0.0.1',
-    #     'user': 'root',
-    #     'pw': 'admin@dev',
-    #     'port': 3306,
-    #     'db': 'blog'
-    # }
     'config': {
-        'host': '172.27.13.16',
+        'host': '127.0.0.1',
         'user': 'root',
         'pw': 'admin@dev',
         'port': 3306,
@@ -25,5 +18,5 @@ MYSQL_SETTINGS = {
     }
 }
 
-# DB_SETTINGS = SQLITE_SETTINGS
-DB_SETTINGS = MYSQL_SETTINGS
+DB_SETTINGS = SQLITE_SETTINGS
+# DB_SETTINGS = MYSQL_SETTINGS
