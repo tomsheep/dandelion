@@ -72,31 +72,31 @@ Lab的第二部分是Session数据存储，我们把它叫做Session的Backends�
 我们的Lab代码使用了DiskStore。不过这个Lab的要求是小蒲要实现CookieStore，把lab中的session backend换掉。CookieStore即上面提到过的不存在服务器，session data也存到客户端的cookie中去。实现这个功能需要小蒲阅读webpy的`session.py`这个文件，仔细理解`Session`( 机制)和`Store`（存储策略）这两个类。CookieStore的框架代码放在lab的`cookie_session.py`里，小蒲需要实现我列出来的函数（CookieStore继承了Store，体会这种结构的好处）
 
 下面是这次lab的具体要求：
+
 1. 成功运行原有代码，注意首次运行命令
 
-    python blog.py 9999 -f
+        python blog.py 9999 -f
 
-其中`-f`表示会重新建表，并添加测试用户`xiaopu`，密码`123`。第二次运行就不用加`-f`了，加了会重新刷表。数据库backends提供了两套，默认是sqlite，小蒲可以在`config.py`里很轻松地换掉（把`DB_SETTINGS`指向`MYSQL_SETTINGS`即可）
+    其中`-f`表示会重新建表，并添加测试用户`xiaopu`，密码`123`。第二次运行就不用加`-f`了，加了会重新刷表。数据库backends提供了两套，默认是sqlite，小蒲可以在`config.py`里很轻松地换掉（把`DB_SETTINGS`指向`MYSQL_SETTINGS`即可）
+    完成下面的步骤：
 
-完成下面的步骤：
-访问首页 -> 点击`New` -> 重定向到登陆页 -> 登录成功 -> 成功进入`New`页面 -> 点右上角的logout -> 成功登出回到首页，右上侧username消失 -> 再次点击`New`需要再次登录
-
-通读lab代码，理解上述每一步的实现原理。
+        访问首页 -> 点击`New` -> 重定向到登陆页 -> 登录成功 -> 成功进入`New`页面 -> 点右上角的logout ->成功登出回到首页，右上侧username消失 -> 再次点击`New`需要再次登录
+    通读lab代码，理解上述每一步的实现原理。
 
 2. 参考webpy的`session.py`， 实现`cookie_session.py`中的CookieStore，并替换掉lab原实现，替换后能成功完成上述流程。
 
 提示：
+
 1. 你可能会用到web.setcookie函数，这个函数的签名为
 
     web.setcookie(name, value, expire='', domain=None, secure=None)
 
-注意expire参数，这里webpy做了处理，不用你自己拼日期，他有这么几种特殊取值：
+    注意expire参数，这里webpy做了处理，不用你自己拼日期，他有这么几种特殊取值：
+    + `''`: 表示不设expire，一般浏览器关闭时这类cookie会被清
+    + 小于0的int: 把expire设为`过去`, 相当于删掉了这个cookie（要删cookie就用这种方式）
+    + 大于0的int: webpy会帮你拼一个expire日期（NOW + expire秒）就是这么多秒后过期
 
-+ `''`: 表示不设expire，一般浏览器关闭时这类cookie会被清
-+ 小于0的int: 把expire设为`过去`, 相当于删掉了这个cookie（要删cookie就用这种方式）
-+ 大于0的int: webpy会帮你拼一个expire日期（NOW + expire秒）就是这么多秒后过期
-
-在webpy的`session.py`中有使用cookie的例子（用来实现身份追踪），可以参看
+    在webpy的`session.py`中有使用cookie的例子（用来实现身份追踪），可以参看。
 
 2. web.cookies()可以获得客户端传来的cookie，返回一个字典。
 
