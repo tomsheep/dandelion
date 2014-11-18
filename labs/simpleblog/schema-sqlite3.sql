@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS entries;
+CREATE TABLE entries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    title TEXT,
+    subtitle TEXT,
+    content TEXT,
+    posted_on DATETIME
+);
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT UNIQUE,
+    password TEXT,
+    create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
