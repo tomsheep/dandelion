@@ -56,7 +56,7 @@ class Session(object):
         self._last_cleanup_time = 0
         self._config = utils.storage(web.config.session_parameters)
         self._data = utils.threadeddict()
-
+        
         self.__getitem__ = self._data.__getitem__
         self.__setitem__ = self._data.__setitem__
         self.__delitem__ = self._data.__delitem__
@@ -96,27 +96,29 @@ class Session(object):
         cookie_path = self._config.cookie_path
         httponly = self._config.httponly
         self.session_id = web.cookies().get(cookie_name)
-
+        
+        
         # protection against session_id tampering
         if self.session_id and not self._valid_session_id(self.session_id):
             self.session_id = None
-
+        
         self._check_expiry()
         if self.session_id:
             d = self.store[self.session_id]
             self.update(d)
             self._validate_ip()
-
+        
         if not self.session_id:
             self.session_id = self._generate_session_id()
-
+            
             if self._initializer:
                 if isinstance(self._initializer, dict):
                     self.update(deepcopy(self._initializer))
                 elif hasattr(self._initializer, '__call__'):
                     self._initializer()
-
+        
         self.ip = web.ctx.ip
+        
 
     def _check_expiry(self):
         # check for expiry

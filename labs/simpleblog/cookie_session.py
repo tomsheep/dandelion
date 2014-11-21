@@ -9,22 +9,26 @@ class CookieStore(web.session.Store):
 
     """
     def __init__(self, cookie_name):
-        pass
+        self.cookie_name = cookie_name
+        
 
     def __contains__(self, key):
-        pass
+        cookies = web.cookies()
+        return self.cookie_name in cookies
 
     def __getitem__(self, key):
-        pass
+        pickled = web.cookies().get(self.cookie_name)
+        return self.decode(pickled)
 
     def __setitem__(self, key, value):
-        pass
+        pickled = self.encode(value)
+        self._setcookie(pickled);
 
     def _setcookie(self, value, expires='', **kw):
-        pass
+        web.setcookie(self.cookie_name, value, expires=expires)
 
     def __delitem__(self, key):
-        pass
+        self._setcookie('', expires=-1);
 
     def cleanup(self, timeout):
         pass
