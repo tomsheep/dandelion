@@ -9,7 +9,7 @@ import model
 from functools import wraps
 from config import DB_SETTINGS
 from optparse import OptionParser
-# from cookie_session import CookieStore
+from cookie_session import CookieStore
 # Url mappings
 urls = (
     '/', 'Index',
@@ -24,8 +24,8 @@ urls = (
 app = web.application(urls, globals())
 
 # TODO: change session store to CookieStore
-session = web.session.Session(app, web.session.DiskStore('sessions'), initializer={'user': None})
-# session = web.session.Session(app, CookieStore('sessions'), initializer={'user': None})
+#session = web.session.Session(app, web.session.DiskStore('sessions'), initializer={'user': None})
+session = web.session.Session(app, CookieStore('sessions'), initializer={'user': None})
 t_globals = {'datestr': web.datestr, 'session': session}
 render = web.template.render('templates', base='base', globals=t_globals)
 
