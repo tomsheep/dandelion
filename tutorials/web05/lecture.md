@@ -53,13 +53,14 @@ app(environ, start_response)
 这个server其实就是Python标准库中自带的，我把源码抽出来做了一些精简，加了一些注释，以便理解。我本来想把其中一些函数掏空，变成这次lab的作业，但想了下可能步子迈的稍微大了一点，小蒲对Python编程还没有完全熟练掌握，还是节奏不那么快为好，所以这个server就是一个功能健全的server。而我们这次的作业很和谐，任务是：把blog中默认的cherrypy（`app.run()`）换成这个简易server，让blog程序照样跑起来。
 
 提示：
+
 1. `app.wsgifunc`返回一个wsgi兼容的app
 2. 参考`simple_wsgi_app.py`中对`simple_server`的使用
 
 这个作业是很容易实现的，冰雪聪明的小蒲自然不在话下~我们这次lab的主要目标是要小蒲读懂`simple_server`的实现，这个还是需要花一些功夫的。下面我讲一些要点：
 
 + 这个实现包括三个重要的类，它们是
-    + WSGIServer: 它的集成关系是`WSGIServer -> HTTPServer -> TCPServer -> BaseServer` , 他的功能其实就是一个TCP服务器，监听一个TCP端口，将请求分发给WSGIRequestHandler
+    + WSGIServer: 它的继承关系是`WSGIServer -> HTTPServer -> TCPServer -> BaseServer` , 他的功能其实就是一个TCP服务器，监听一个TCP端口，将请求分发给WSGIRequestHandler
     + WSGIRequestHandler: 接受请求，解析HTTP，填充部分环境变量（CGI变量），把真正处理Req的逻辑交给SimpleHandler
     + SimpleHandler: 其实逻辑上这个类并不必须，他的操作内容可以都放到WSGIRequestHanlder里去做，这样分离开是为了隔离职责。它继续填充环境变量（WSGI变量部分），然后调用wsgi app接口，完成这次请求。
 + 关于WSGIServer（TCPServer）的部分，需要回忆一下socket网络编程。这里模型很简单，就是单线程循环的select阻塞调用，有socket进来则进行handle，没有工作线程，请求处理就在socket线程里做，也就是说，如果处理一个请求很慢，在这期间Server是不能响应到来的其他请求的。
