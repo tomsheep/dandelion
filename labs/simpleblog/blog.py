@@ -154,4 +154,10 @@ if __name__ == '__main__':
         model.flushdb(DB_SETTINGS)
     else:
         model.initdb(DB_SETTINGS)
-    app.run()
+    # app.run()
+    wsgi_app = app.wsgifunc()
+    port = 9999
+    from simple_server import make_server
+    server = make_server('0.0.0.0', port, wsgi_app)
+    print 'wsgi server start to listen on port %s...' % port
+    server.serve_forever()
