@@ -326,7 +326,9 @@ class SimpleHandler:
         # prematurely closing.  Async servers must return from 'run()' without
         # closing if there might still be output to iterate over.
         try:
+            # 在这一步之后，self.environ就包括了系统环境变量+wsgi规范变量
             self.setup_environ()
+            # 调用wsgi规范接口
             self.result = application(self.environ, self.start_response)
             self.finish_response()
         except:
