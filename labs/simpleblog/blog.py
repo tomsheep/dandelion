@@ -159,3 +159,14 @@ if __name__ == '__main__':
     # Tips:
     #    1. wsgi_app = app.wsgifunc()
     #    2. `simple_wsgi_app.py` for your reference
+    import sys
+    if len(sys.argv) > 1:
+        port = int(sys.argv[1])
+    else:
+        port = 9999
+        
+    wsgi_app = app.wsgifunc()
+    from simple_server import make_server
+    server = make_server('127.0.0.1', port, wsgi_app)
+    print 'wsgi server start to listen on port %s...' % port
+    server.serve_forever()
